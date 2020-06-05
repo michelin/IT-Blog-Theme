@@ -109,6 +109,12 @@ into the {body} of the default.hbs template --}}
                 </div>
             </section>
 
+            <section class="post-full-social">
+                <a class="twitter-share-button"
+                  data-size="large"
+                  href="https://twitter.com/intent/tweet?via=michelin_eng">Tweet</a>
+            </section>
+
             {{!-- Email subscribe form at the bottom of the page --}}
             {{#if @labs.members}}
                 {{> subscribe-form}}
@@ -211,4 +217,20 @@ into the {body} of the default.hbs template --}}
         });
     });
 </script>
+<script>window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));</script>
 {{/contentFor}}
