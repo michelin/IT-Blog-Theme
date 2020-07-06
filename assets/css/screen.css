@@ -1057,12 +1057,6 @@ make sure this only happens on large viewports / desktop-ish devices.
     background: #fff;
 }
 
-.post-full-social {
-    margin: 0 auto;
-    padding: 0 170px 1vw;
-    text-align: center;
-}
-
 @media (max-width: 1170px) {
     .post-full-content {
         padding: 0 11vw;
