@@ -171,7 +171,7 @@ body {
 }
 
 .site-logo {
-    max-height: 55px;
+    width: 100%;
 }
 
 .site-description {
@@ -197,7 +197,7 @@ body {
 }
 
 .site-home-header .site-header-content {
-    padding: 5vw 3vw 6vw;
+    padding: 5vw 3vw 5vw;
 }
 
 .site-home-header .site-title {
@@ -417,7 +417,6 @@ The knock-on effect of this is ugly browser-scroll bars at the bottom, so 80px o
 .nav li a:hover {
     text-decoration: none;
     opacity: 1;
-    color: var(--blue);
 }
 
 .nav li a:before {
@@ -430,6 +429,10 @@ The knock-on effect of this is ugly browser-scroll bars at the bottom, so 80px o
     background: #fff;
     opacity: 0.25;
     transition: all 0.35s ease-in-out;
+}
+
+.fixed-nav-active .nav li a:before {
+    background: var(--blue);
 }
 
 .nav li a:hover:before {
