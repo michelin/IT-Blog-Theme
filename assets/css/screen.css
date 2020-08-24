@@ -159,11 +159,15 @@ body {
     max-height: 340px;
 }
 
+.page-template .site-header-content {
+    text-align: center;
+}
+
 .site-title {
     z-index: 10;
     margin: 0 0 0 -2px;
     padding: 0;
-    font-size: 3.5rem;
+    font-size: 2.7rem;
     line-height: 1em;
     font-weight: 600;
     font-family: "Michelin Bold";
@@ -987,7 +991,7 @@ make sure this only happens on large viewports / desktop-ish devices.
     }
 
     .post-card-excerpt {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
     }
 }
 
@@ -1158,6 +1162,10 @@ make sure this only happens on large viewports / desktop-ish devices.
     font-family: "Michelin Bold";
 }
 
+.page-template .post-full-title{
+    text-align: center;
+}
+
 .post-full-custom-excerpt {
     margin: 20px 0 0;
     color: var(--midgrey);
@@ -1208,12 +1216,12 @@ make sure this only happens on large viewports / desktop-ish devices.
 @media (max-width: 800px) {
     .post-full-content {
         padding: 0 5vw;
-        font-size: 1.8rem;
+        font-size: 1.5rem;
     }
 }
 @media (max-width: 500px) {
     .post-full-custom-excerpt {
-        font-size: 1.9rem;
+        font-size: 1.6rem;
         line-height: 1.5em;
     }
 }
@@ -1474,7 +1482,7 @@ Usage (In Ghost editor):
 @media (max-width: 800px) {
     .post-full-content h2 {
         margin-bottom: 0.3em;
-        font-size: 2.3rem;
+        font-size: 1.7rem;
         line-height: 1.25em;
     }
 }
@@ -1491,14 +1499,14 @@ Usage (In Ghost editor):
 @media (max-width: 800px) {
     .post-full-content h3 {
         margin-bottom: 0.3em;
-        font-size: 2.4rem;
+        font-size: 1.6rem;
         line-height: 1.3em;
     }
 }
 
 .post-full-content h4 {
     margin: 0.5em 0 0.2em;
-    font-size: 2rem;
+    font-size: 1.4pxrem;
     font-weight: 600;
 }
 .post-full-content h2 + h4 {
@@ -1537,7 +1545,7 @@ Usage (In Ghost editor):
         margin-bottom: 1em;
         margin-left: 1.3em;
         padding: 0 0 0.5em;
-        font-size: 2.4rem;
+        font-size: 1.3rem;
         text-align: initial;
     }
 }
@@ -1549,7 +1557,7 @@ Usage (In Ghost editor):
 }
 @media (max-width: 800px) {
     .post-full-content h6 {
-        font-size: 1.8rem;
+        font-size: 1rem;
         line-height: 1.4em;
     }
 }
@@ -1600,7 +1608,7 @@ Usage (In Ghost editor):
 
     .post-full-title {
         margin-top: 0.2em;
-        font-size: 2.6rem;
+        font-size: 2.1rem;
         line-height: 1.05em;
 
     }
@@ -2265,17 +2273,23 @@ Usage (In Ghost editor):
         padding: 25px 0 0;
     }
 
+    .read-next-feed article:last-child{
+        border: none;
+    }
+
     .read-next-card {
         flex: 1 1 auto;
         margin: 0 25px;
         padding: 0;
+        padding-bottom: 25px;
         background: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
 
     .read-next .post-card {
         flex: 1 1 auto;
-        margin: 25px;
-        padding: 25px 0 0;
+        margin: 25px 25px 0px 25px;
+        padding-bottom: 25px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
 }

@@ -17,7 +17,7 @@ var scripts = document.getElementsByTagName('script'),
 
 
 var tarteaucitron = {
-    "version": 20200521,
+    "version": 20200730,
     "cdn": cdn,
     "user": {},
     "lang": {},
@@ -210,6 +210,7 @@ var tarteaucitron = {
                 "showAlertSmall": true,
                 "cookieslist": true,
                 "handleBrowserDNTRequest": false,
+                "DenyAllCta": true,
                 "AcceptAllCta" : true,
                 "moreInfoLink": true,
                 "privacyUrl": "",
@@ -219,8 +220,8 @@ var tarteaucitron = {
             },
             params = tarteaucitron.parameters;
 
-        // Don't show the middle bar if we are on the privacy policy page
-        if (window.location.href == tarteaucitron.parameters.privacyUrl && tarteaucitron.parameters.orientation == "middle") {
+        // Don't show the middle bar if we are on the privacy policy or more page
+        if (((tarteaucitron.parameters.readmoreLink !== undefined && window.location.href == tarteaucitron.parameters.readmoreLink) || window.location.href == tarteaucitron.parameters.privacyUrl) && tarteaucitron.parameters.orientation == "middle") {
             tarteaucitron.parameters.orientation = "bottom";
         }
 
@@ -406,7 +407,7 @@ var tarteaucitron = {
                     html += '   </button>';
 
 
-                    if (tarteaucitron.parameters.orientation === 'middle') {
+                    if (tarteaucitron.parameters.DenyAllCta) {
                         html += '   <button type="button" class="tarteaucitronCTAButton tarteaucitronDeny"  onclick="tarteaucitron.userInterface.respondAll(false);">';
                         html += '       &#10007; ' + tarteaucitron.lang.denyAll;
                         html += '   </button>';
@@ -1362,9 +1363,9 @@ var tarteaucitron = {
                         html += '</div><ul class="cookie-list">';
                     }
                     html += '<li class="tarteaucitronCookiesListMain">';
-                    html += '    <div class="tarteaucitronCookiesListLeft"><button type="button" onclick="tarteaucitron.cookie.purge([\'' + cookies[i].split('=', 1) + '\']);tarteaucitron.cookie.number();tarteaucitron.userInterface.jsSizing(\'cookie\');return false"><strong>&times;</strong></button> <strong>' + name + '</strong>';
+                    html += '    <div class="tarteaucitronCookiesListLeft"><button type="button" onclick="tarteaucitron.cookie.purge([\'' + tarteaucitron.fixSelfXSS(cookies[i].split('=', 1)) + '\']);tarteaucitron.cookie.number();tarteaucitron.userInterface.jsSizing(\'cookie\');return false"><strong>&times;</strong></button> <strong>' + tarteaucitron.fixSelfXSS(name) + '</strong>';
                     html += '    </div>';
-                    html += '    <div class="tarteaucitronCookiesListRight">' + cookies[i].split('=').slice(1).join('=') + '</div>';
+                    html += '    <div class="tarteaucitronCookiesListRight">' + tarteaucitron.fixSelfXSS(cookies[i].split('=').slice(1).join('=')) + '</div>';
                     html += '</li>';
                 }
                 html += '</ul>';
@@ -1393,6 +1394,10 @@ var tarteaucitron = {
                 tarteaucitron.cookie.checkCount(tarteaucitron.job[i]);
             }
         }
+    },
+    "fixSelfXSS": function(html) {
+        fixed = html.toString().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        return fixed;
     },
     "getLanguage": function () {
         "use strict";
