@@ -8,7 +8,7 @@ into the {body} tag of the default.hbs template --}}
 {{!-- Everything inside the #post block pulls data from the post --}}
 
 <main id="site-main" class="site-main">
-<article class="article {{post_class}} {{#match @custom.post_image_style "Full"}}image-full{{else match @custom.post_image_style "=" "Small"}}image-small{{/match}}">
+<article class="article {{post_class}} no-image">
 
     <header class="article-header gh-canvas">
 
@@ -131,29 +131,24 @@ into the {body} tag of the default.hbs template --}}
 
 {{!-- Read more links, just above the footer --}}
 {{#if @custom.show_recent_posts_footer}}
-    {{#get "posts" limit="3" filter="tags:{{primary_tag.slug}}+id:-{{id}}" include="tags,authors"}}
-        {{#if posts}}
+    {{!-- The {#get} helper below fetches some of the latest posts here
+    so that people have something else to read when they finish this one.
+
+    This query gets the latest 3 posts on the site, but adds a filter to
+    exclude the post we're currently on from being included. --}}
+    {{#get "posts" filter="id:-{{id}}" limit="3" as |more_posts|}}
+
+        {{#if more_posts}}
             <aside class="read-more-wrap outer">
                 <div class="read-more inner">
-                    {{#foreach posts}}
+                    {{#foreach more_posts}}
                         {{> "post-card"}}
                     {{/foreach}}
                 </div>
             </aside>
         {{/if}}
-    {{else}}
-        {{#get "posts" limit="3" include="tags,authors"}}
-            {{#if posts}}
-                <aside class="read-more-wrap outer">
-                    <div class="read-more inner">
-                        {{#foreach posts}}
-                            {{> "post-card"}}
-                        {{/foreach}}
-                    </div>
-                </aside>
-            {{/if}}
-        {{/get}}
+
     {{/get}}
 {{/if}}
-{{/post}}
 
+{{/post}}

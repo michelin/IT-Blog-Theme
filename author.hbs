@@ -42,11 +42,13 @@
 
                 <footer class="author-profile-footer">
                     {{#if location}}
-                        <div class="author-profile-location">{{location}}</div>
+                        <a class="author-profile-location" href="https://maps.google.com?q={{location}}" target="_blank">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i> {{location}}
+                        </a>
                     {{/if}}
                     <div class="author-profile-meta">
                         {{#if website}}
-                            <a class="author-profile-social-link" href="{{website}}" target="_blank" rel="noopener">{{website}}</a>
+                            <a class="author-profile-social-link" href="{{website}}" target="_blank" rel="noopener">{{> "icons/linkedin"}}</a>
                         {{/if}}
                         {{#if twitter}}
                             <a class="author-profile-social-link" href="{{twitter_url}}" target="_blank" rel="noopener">{{> "icons/twitter"}}</a>

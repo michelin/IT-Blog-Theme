@@ -1,0 +1,60 @@
+{{!< default}}
+
+{{#post}}
+
+<main id="site-main" class="site-main outer" role="main">
+
+  <div class="inner">
+    <header class="article-header gh-canvas">
+       <h1 class="article-title">{{title}}</h1>
+    </header>
+
+      <div class="post-feed authors-list">
+
+      {{#get "authors" limit="all" include="count.posts" order="count.posts desc" }}
+        {{#foreach authors}}
+          <article class="post-card">
+            <a class="author-link" href="{{url}}">
+                {{#if profile_image}}
+                    <img class="author-profile-image" src="{{profile_image}}" alt="{{name}}" />
+                {{else}}
+                    <span class="author-profile-image">{{> "icons/avatar"}}</span>
+                {{/if}}
+            </a>
+            <div class="post-card-content">
+              <header class="post-card-header">
+                <h2 class="post-card-title">
+                  <a class="author-link" href="{{url}}">{{name}}</a>
+                </h2>
+                </header>
+                <section class="post-card-excerpt">
+                {{#if location}}
+                  <p>
+                    <a class="author-location" href="https://maps.google.com?q={{location}}" target="_blank">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i> {{location}}
+                    </a>
+                  </p>
+                {{/if}}
+                  <p>{{bio}}</p>
+                </section>
+                <p>
+                 {{#if twitter}}
+                  <a href="{{twitter_url}}" class="author-link author-social" target="_blank" title="Twitter">
+                      <i class="fa fa-2 fa-twitter" aria-hidden="true"></i>
+                  </a>
+                  {{/if}}
+                  {{#if website}}
+                  <a href="{{website}}" class="author-link author-social" target="_blank" title="Website">
+                      <i class="fa fa-2 fa-globe" aria-hidden="true"></i>
+                  </a>
+                  {{/if}}
+                </p>
+            </div>
+          </article>
+        {{/foreach}}
+       {{/get}}
+      </div>
+  </div>
+</main>
+
+{{/post}}
