@@ -24,7 +24,7 @@ into the {body} of the default.hbs template --}}
         <div class="site-header-inner inner">
             {{#match @custom.navigation_layout "Logo on cover"}}
                 {{#if @site.logo}}
-                    <img class="site-logo" src="{{@site.logo}}" alt="{{@site.title}}">
+                    <img class="site-logo" src="{{asset "logo-header.svg"}}" alt="{{@site.title}}" />
                 {{else}}
                     <h1 class="site-title">{{@site.title}}</h1>
                 {{/if}}
