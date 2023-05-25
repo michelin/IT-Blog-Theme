@@ -55,6 +55,10 @@
                 {{#unless @site.members_enabled}}
                     {{^match @custom.navigation_layout "Stacked"}}
                         <button class="gh-search gh-icon-btn" data-ghost-search>{{> "icons/search"}}</button>
+                        <a class="social-link social-link-li" href="https://www.linkedin.com/showcase/michelin-it-digital" title="Linkedin" target="_blank" rel="noopener">{{> "icons/linkedin"}}</a>
+                        {{#if @site.twitter}}
+                            <a class="social-link social-link-tw" href="{{twitter_url @site.twitter}}" title="Twitter" target="_blank" rel="noopener">{{> "icons/twitter"}}</a>
+                        {{/if}}
                     {{/match}}
                 {{else}}
                     <button class="gh-search gh-icon-btn" data-ghost-search>{{> "icons/search"}}</button>

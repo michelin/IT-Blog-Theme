@@ -190,7 +190,7 @@ blockquote, dl, ol, p, ul{
 .article-title {
     color: var(--ghost-accent-color);
     font-family: var(--font-michelin-bold) !important;
-    font-size: clamp(3.2rem,5vw,3.25rem);
+    font-size: clamp(2.5rem,5vw,3.25rem);
 }
 
 .page-template .article-title{
@@ -473,9 +473,24 @@ article:not(.post-card-large):not(.dynamic) h2.post-card-title{
     .post-card-large .post-card-content {
         grid-column: unset;
     }
+
     .author-template .post-card-large .post-card-content:only-child {
         grid-column: inherit;
         max-width: unset;
+    }
+
+    .post-card.dynamic .post-card-title {
+        font-size: 2rem;
+    }
+
+    .post-card-large .post-card-title {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 1001px) {
+    article h2.post-card-title {
+        font-size: 1.6rem !important;
     }
 }
 
@@ -711,4 +726,40 @@ article:not(.post-card-large):not(.dynamic) h2.post-card-title{
     letter-spacing: -5px;
     opacity: 0.9;
     font-family: var(--font-michelin-bold);
+}
+
+/* Youtube overlay
+/* ---------------------------------------------------------- */
+
+.youtube-container{
+    position: relative;
+}
+.youtube-container > iframe{
+    display:block;
+}
+
+.youtube-container > .video-consent-overlay{
+    position:absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--ghost-accent-color);
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing:border-box;
+    padding:0 20px;
+    color: white;
+}
+.youtube-container .video-consent-overlay-text{
+    text-align:center;
+}
+.youtube-container .video-consent-overlay-accept-button{
+    margin: 20px 0 0 0;
+    padding: 8px 10px;
+    background-color: #fce500;
+    color: black;
+    cursor:pointer;
 }
