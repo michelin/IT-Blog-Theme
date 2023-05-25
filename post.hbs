@@ -142,7 +142,7 @@ into the {body} tag of the default.hbs template --}}
             </aside>
         {{/if}}
     {{else}}
-        {{#get "posts" limit="3" include="tags,authors"}}
+        {{#get "posts" filter="id:-{{id}}" limit="3" include="tags,authors"}}
             {{#if posts}}
                 <aside class="read-more-wrap outer">
                     <div class="read-more inner">
