@@ -304,6 +304,10 @@ blockquote, dl, ol, p, ul{
     }
 }
 
+.no-image .article-image {
+    display: none !important;
+}
+
 /* Card
 /* ---------------------------------------------------------- */
 
