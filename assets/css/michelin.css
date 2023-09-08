@@ -498,6 +498,16 @@ article:not(.post-card-large):not(.dynamic) h2.post-card-title{
 /* Social
 /* ---------------------------------------------------------- */
 
+.twitter{
+    margin: 0px -8px;
+    padding: 0px 0px;
+}
+
+.twitter svg, .post-full-social svg, .post-full-social-small svg {
+    width: 20px;
+    height: 17px;
+}
+
 .post-full-social {
     margin: 35px auto 0;
     padding: 0 170px 1vw;

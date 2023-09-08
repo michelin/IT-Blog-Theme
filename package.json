@@ -2,7 +2,7 @@
     "name": "michelin",
     "description": "Michelin default theme for Ghost publishing platform",
     "demo": "https://blogit.michelin.io/",
-    "version": "5.5.1",
+    "version": "5.7.0",
     "engines": {
         "ghost": ">=5.0.0"
     },
