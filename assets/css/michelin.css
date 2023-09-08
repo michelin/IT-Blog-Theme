@@ -344,6 +344,11 @@ a.author-link, a.author-link:hover{
     text-decoration: none;
 }
 
+a.author-link.author-social.twitter svg {
+    margin-right: 16px;
+    margin-bottom: 5px;
+}
+
 a.author-location{
     text-decoration: none;
     color: var(--color-darkgrey);
