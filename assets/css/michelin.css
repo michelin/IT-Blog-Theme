@@ -562,6 +562,10 @@ article:not(.post-card-large):not(.dynamic) h2.post-card-title{
     opacity: 0.6;
 }
 
+a.social-link.social-link-li{
+    color:inherit;
+}
+
 .social-link svg {
     height: 1.8rem;
     fill: var(--ghost-accent-color);
