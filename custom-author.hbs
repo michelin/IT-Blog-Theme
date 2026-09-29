@@ -36,11 +36,11 @@
                   <p>{{bio}}</p>
                 </section>
                 <p>
-                 {{#if twitter}}
-                  <a href="{{twitter_url}}" class="author-link author-social twitter" target="_blank" title="X">
-                      {{> "icons/twitter"}}
+                  {{#social_accounts this}}
+                  <a href="{{href}}" class="author-link author-social {{type}}" target="_blank" rel="noopener" title="{{name}}">
+                      {{#> (concat "icons/" type)}}<span>{{name}}</span>{{/undefined}}
                   </a>
-                  {{/if}}
+                  {{/social_accounts}}
                   {{#if website}}
                   <a href="{{website}}" class="author-link author-social" target="_blank" title="Website">
                       <i class="fa fa-2 fa-globe" aria-hidden="true"></i>

@@ -7,7 +7,7 @@ const inquirer = require('inquirer');
 // gulp plugins and utils
 const livereload = require('gulp-livereload');
 const postcss = require('gulp-postcss');
-const zip = require('gulp-zip');
+const zip = require('gulp-zip').default;
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 const beeper = require('beeper');
@@ -18,6 +18,9 @@ const autoprefixer = require('autoprefixer');
 const colorFunction = require('postcss-color-mod-function');
 const cssnano = require('cssnano');
 const easyimport = require('postcss-easy-import');
+
+// translations support
+const { mergeLocales } = require('@tryghost/theme-translations/build');
 
 const REPO = 'TryGhost/Casper';
 const REPO_READONLY = 'TryGhost/Casper';
@@ -80,8 +83,11 @@ function zipper(done) {
             '**',
             '!node_modules', '!node_modules/**',
             '!dist', '!dist/**',
-            '!yarn-error.log',
-            '!yarn.lock',
+            '!pnpm-debug.log',
+            '!pnpm-lock.yaml',
+            '!pnpm-workspace.yaml',
+            '!AGENTS.md',
+            '!CLAUDE.md',
             '!gulpfile.js'
         ]),
         zip(filename),
@@ -89,18 +95,26 @@ function zipper(done) {
     ], handleError(done));
 }
 
+function locales(done) {
+    mergeLocales({
+        local: './locales-local',
+        output: './locales'
+    })(done);
+}
+
 const cssWatcher = () => watch('assets/css/**', css);
 const jsWatcher = () => watch('assets/js/**', js);
 const hbsWatcher = () => watch(['*.hbs', 'partials/**/*.hbs'], hbs);
-const watcher = parallel(cssWatcher, jsWatcher, hbsWatcher);
-const build = series(css, js);
+const localesWatcher = () => watch('./locales-local/**/*.json', locales);
+const watcher = parallel(cssWatcher, jsWatcher, hbsWatcher, localesWatcher);
+const build = series(css, js, locales);
 
 exports.build = build;
 exports.zip = series(build, zipper);
 exports.default = series(build, serve, watcher);
 
 exports.release = async () => {
-    // @NOTE: https://yarnpkg.com/lang/en/docs/cli/version/
+    // @NOTE: https://pnpm.io/cli/version
     // require(./package.json) can run into caching issues, this re-reads from file everytime on release
     let packageJSON = JSON.parse(fs.readFileSync('./package.json'));
     const newVersion = packageJSON.version;
@@ -120,11 +134,12 @@ exports.release = async () => {
     }
 
     try {
-        const result = await inquirer.prompt([{
+        const prompt = inquirer.createPromptModule();
+        const result = await prompt([{
             type: 'input',
             name: 'compatibleWithGhost',
             message: 'Which version of Ghost is it compatible with?',
-            default: '5.0.0'
+            default: '6.0.0'
         }]);
 
         const compatibleWithGhost = result.compatibleWithGhost;
