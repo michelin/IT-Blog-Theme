@@ -1,0 +1,9 @@
+{{#if posts}}
+    <aside class="read-more-wrap outer">
+        <div class="read-more inner">
+            {{#foreach posts}}
+                {{> "post-card"}}
+            {{/foreach}}
+        </div>
+    </aside>
+{{/if}}

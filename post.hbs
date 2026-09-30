@@ -19,7 +19,7 @@ into the {body} tag of the default.hbs template --}}
                 </span>
             {{/primary_tag}}
             {{#if featured}}
-                <span class="post-card-featured">{{> "icons/fire"}} Featured</span>
+                <span class="post-card-featured">{{> "icons/fire"}} {{t "Featured"}}</span>
             {{/if}}
         </div>
 
@@ -37,7 +37,7 @@ into the {body} tag of the default.hbs template --}}
                 <li class="author-list-item">
                     {{#if profile_image}}
                     <a href="{{url}}" class="author-avatar" aria-label="Read more of {{name}}">
-                        <img class="author-profile-image" src="{{img_url profile_image size="xs"}}" alt="{{name}}" />
+                        <img class="author-profile-image" src="{{img_url profile_image size="xs"}}" alt="{{name}}" loading="eager" />
                     </a>
                     {{else}}
                     <a href="{{url}}" class="author-avatar author-profile-image" aria-label="Read more of {{name}}">{{> "icons/avatar"}}</a>
@@ -51,13 +51,12 @@ into the {body} tag of the default.hbs template --}}
                 <div class="byline-meta-content">
                     <time class="byline-meta-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
                     {{#if reading_time}}
-                        <span class="byline-reading-time"><span class="bull">&bull;</span> {{reading_time}}</span>
+                        <span class="byline-reading-time"><span class="bull">&bull;</span> {{reading_time minute=(t "1 min read") minutes=(t "% min read")}}</span>
                     {{/if}}
                 </div>
             </div>
-            <div class="fill-remaining-space"></div>
-            {{> "social" small='-small'}}
         </section>
+        <a href="#/share" class="gh-button gh-button-share">{{t "Share"}}</a>
         </div>
 
         {{#match @custom.post_image_style "!=" "Hidden"}}
@@ -66,6 +65,7 @@ into the {body} tag of the default.hbs template --}}
                 {{!-- This is a responsive image, it loads different sizes depending on device
                 https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433 --}}
                 <img
+                    class="gh-feature-image"
                     srcset="{{img_url feature_image size="s"}} 300w,
                             {{img_url feature_image size="m"}} 600w,
                             {{img_url feature_image size="l"}} 1000w,
@@ -73,6 +73,8 @@ into the {body} tag of the default.hbs template --}}
                     sizes="(min-width: 1400px) 1400px, 92vw"
                     src="{{img_url feature_image size="xl"}}"
                     alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+                    fetchpriority="high"
+                    loading="eager"
                 />
                 {{#if feature_image_caption}}
                     <figcaption>{{feature_image_caption}}</figcaption>
@@ -97,8 +99,6 @@ into the {body} tag of the default.hbs template --}}
      </section>
     {{/if}}
 
-    {{> "social"}}
-
     {{#if comments}}
         <section class="article-comments gh-canvas">
             {{comments}}
@@ -117,8 +117,8 @@ into the {body} tag of the default.hbs template --}}
         <div class="inner">
             {{#if @custom.email_signup_text}}<h2 class="footer-cta-title">{{@custom.email_signup_text}}</h2>{{/if}}
             <a class="footer-cta-button" href="#/portal" data-portal>
-                <div class="footer-cta-input">Enter your email</div>
-                <span>Subscribe</span>
+                <div class="footer-cta-input">{{t "Enter your email"}}</div>
+                <span>{{t "Subscribe"}}</span>
             </a>
         </div>
     </section>
@@ -130,29 +130,23 @@ into the {body} tag of the default.hbs template --}}
 
 {{!-- Read more links, just above the footer --}}
 {{#if @custom.show_recent_posts_footer}}
-    {{#get "posts" limit="3" filter="tags:{{primary_tag.slug}}+id:-{{id}}" include="tags,authors"}}
-        {{#if posts}}
-            <aside class="read-more-wrap outer">
-                <div class="read-more inner">
-                    {{#foreach posts}}
-                        {{> "post-card"}}
-                    {{/foreach}}
-                </div>
-            </aside>
-        {{/if}}
-    {{else}}
-        {{#get "posts" filter="id:-{{id}}" limit="3" include="tags,authors"}}
+    {{!-- Latest 3 posts sharing the primary tag, else the latest 3 posts.
+    {{#get}} only renders its {{else}} on API errors, so the fallback is in {{#if posts}}'s {{else}} --}}
+    {{#if primary_tag}}
+        {{#get "posts" limit="3" filter="tags:{{primary_tag.slug}}+id:-{{id}}" include="tags,authors"}}
             {{#if posts}}
-                <aside class="read-more-wrap outer">
-                    <div class="read-more inner">
-                        {{#foreach posts}}
-                            {{> "post-card"}}
-                        {{/foreach}}
-                    </div>
-                </aside>
+                {{> "read-more"}}
+            {{else}}
+                {{#get "posts" limit="3" filter=(concat "id:-" ../id) include="tags,authors"}}
+                    {{> "read-more"}}
+                {{/get}}
             {{/if}}
         {{/get}}
-    {{/get}}
+    {{else}}
+        {{#get "posts" limit="3" filter="id:-{{id}}" include="tags,authors"}}
+            {{> "read-more"}}
+        {{/get}}
+    {{/if}}
 {{/if}}
 
 {{/post}}
